@@ -1,0 +1,225 @@
+market-data-pipeline/
+│
+├── README.md
+├── .gitignore
+├── .env.example
+├── Makefile
+├── requirements.txt
+├── docker-compose.yml
+├── setup.py
+│
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
+│       └── deploy.yml
+│
+├── airflow/
+│   ├── dags/
+│   │   ├── __init__.py
+│   │   ├── equity_ingest_15min.py
+│   │   ├── equity_ingest_daily.py
+│   │   ├── data_quality_checks.py
+│   │   └── backfill_historical.py
+│   ├── plugins/
+│   │   ├── operators/
+│   │   │   ├── __init__.py
+│   │   │   ├── polygon_operator.py
+│   │   │   └── iceberg_operator.py
+│   │   └── sensors/
+│   │       ├── __init__.py
+│   │       └── data_quality_sensor.py
+│   └── config/
+│       ├── airflow.cfg
+│       └── connections.yaml
+│
+├── src/
+│   ├── __init__.py
+│   ├── ingestion/
+│   │   ├── __init__.py
+│   │   ├── polygon_client.py
+│   │   ├── api_handlers.py
+│   │   └── rate_limiter.py
+│   ├── transformations/
+│   │   ├── __init__.py
+│   │   ├── bronze_to_silver.py
+│   │   ├── silver_to_gold.py
+│   │   ├── financial_metrics.py
+│   │   └── data_quality.py
+│   ├── loaders/
+│   │   ├── __init__.py
+│   │   ├── timescale_loader.py
+│   │   ├── clickhouse_loader.py
+│   │   └── iceberg_writer.py
+│   ├── common/
+│   │   ├── __init__.py
+│   │   ├── schemas.py
+│   │   ├── constants.py
+│   │   ├── exceptions.py
+│   │   └── utils.py
+│   └── config/
+│       ├── __init__.py
+│       ├── spark_config.py
+│       ├── database_config.py
+│       └── storage_config.py
+│
+├── spark/
+│   ├── jobs/
+│   │   ├── bronze_to_silver_job.py
+│   │   ├── silver_to_gold_job.py
+│   │   ├── calculate_metrics_job.py
+│   │   └── load_to_serving_job.py
+│   ├── jars/
+│   │   └── iceberg-spark-runtime.jar
+│   └── conf/
+│       └── spark-defaults.conf
+│
+├── terraform/
+│   ├── environments/
+│   │   ├── dev/
+│   │   │   ├── main.tf
+│   │   │   ├── variables.tf
+│   │   │   ├── outputs.tf
+│   │   │   └── terraform.tfvars
+│   │   └── prod/
+│   │       ├── main.tf
+│   │       ├── variables.tf
+│   │       ├── outputs.tf
+│   │       └── terraform.tfvars
+│   ├── modules/
+│   │   ├── s3/
+│   │   │   ├── main.tf
+│   │   │   ├── variables.tf
+│   │   │   └── outputs.tf
+│   │   ├── rds/
+│   │   │   ├── main.tf
+│   │   │   ├── variables.tf
+│   │   │   └── outputs.tf
+│   │   ├── ec2/
+│   │   │   ├── main.tf
+│   │   │   ├── variables.tf
+│   │   │   └── outputs.tf
+│   │   ├── iam/
+│   │   │   ├── main.tf
+│   │   │   ├── variables.tf
+│   │   │   └── outputs.tf
+│   │   ├── vpc/
+│   │   │   ├── main.tf
+│   │   │   ├── variables.tf
+│   │   │   └── outputs.tf
+│   │   └── glue/
+│   │       ├── main.tf
+│   │       ├── variables.tf
+│   │       └── outputs.tf
+│   └── backend.tf
+│
+├── web/
+│   ├── backend/
+│   │   ├── __init__.py
+│   │   ├── main.py
+│   │   ├── api/
+│   │   │   ├── __init__.py
+│   │   │   ├── routes/
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── equity.py
+│   │   │   │   ├── metrics.py
+│   │   │   │   └── health.py
+│   │   │   └── dependencies.py
+│   │   ├── models/
+│   │   │   ├── __init__.py
+│   │   │   ├── equity.py
+│   │   │   └── metrics.py
+│   │   ├── services/
+│   │   │   ├── __init__.py
+│   │   │   ├── database_service.py
+│   │   │   ├── cache_service.py
+│   │   │   └── query_service.py
+│   │   ├── db/
+│   │   │   ├── __init__.py
+│   │   │   ├── postgres_client.py
+│   │   │   ├── clickhouse_client.py
+│   │   │   └── connection_pool.py
+│   │   └── requirements.txt
+│   └── frontend/
+│       ├── index.html
+│       ├── css/
+│       │   └── styles.css
+│       ├── js/
+│       │   ├── app.js
+│       │   ├── charts.js
+│       │   └── api-client.js
+│       └── assets/
+│           └── logo.png
+│
+├── scripts/
+│   ├── setup/
+│   │   ├── install_dependencies.sh
+│   │   ├── init_databases.sql
+│   │   ├── create_iceberg_tables.py
+│   │   └── seed_test_data.py
+│   ├── deployment/
+│   │   ├── deploy.sh
+│   │   ├── rollback.sh
+│   │   └── health_check.py
+│   └── maintenance/
+│       ├── cleanup_old_data.py
+│       ├── optimize_tables.py
+│       └── backup_metadata.sh
+│
+├── config/
+│   ├── ticker_list.yaml
+│   ├── metrics_definitions.yaml
+│   ├── data_quality_rules.yaml
+│   └── logging_config.yaml
+│
+├── tests/
+│   ├── __init__.py
+│   ├── unit/
+│   │   ├── __init__.py
+│   │   ├── test_polygon_client.py
+│   │   ├── test_transformations.py
+│   │   ├── test_metrics.py
+│   │   └── test_loaders.py
+│   ├── integration/
+│   │   ├── __init__.py
+│   │   ├── test_pipeline_flow.py
+│   │   ├── test_database_connections.py
+│   │   └── test_api_endpoints.py
+│   └── fixtures/
+│       ├── sample_polygon_response.json
+│       ├── sample_equity_data.csv
+│       └── test_config.yaml
+│
+├── notebooks/
+│   ├── data_exploration.ipynb
+│   ├── metrics_validation.ipynb
+│   └── performance_analysis.ipynb
+│
+├── docs/
+│   ├── architecture/
+│   │   ├── system_design.md
+│   │   ├── data_flow.md
+│   │   └── diagrams/
+│   │       ├── architecture.png
+│   │       └── data_lineage.png
+│   ├── setup/
+│   │   ├── local_setup.md
+│   │   ├── aws_setup.md
+│   │   └── troubleshooting.md
+│   ├── api/
+│   │   └── api_documentation.md
+│   └── operations/
+│       ├── deployment_guide.md
+│       ├── monitoring.md
+│       └── disaster_recovery.md
+│
+├── monitoring/
+│   ├── dashboards/
+│   │   ├── pipeline_metrics.json
+│   │   └── data_quality.json
+│   └── alerts/
+│       └── alert_rules.yaml
+│
+└── logs/
+    ├── airflow/
+    ├── spark/
+    └── application/

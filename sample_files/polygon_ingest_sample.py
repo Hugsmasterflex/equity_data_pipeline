@@ -43,10 +43,10 @@ raise RuntimeError('Failed after retries')
 # Normalize a single Polygon agg bar to our schema
 def normalize_agg(bar, symbol, timespan='1min', multiplier=1, provider='polygon'):
 # Polygon aggregated bar fields: v, o, c, h, l, t (unix ms)
-t_ms = int(bar.get('t'))
-t = datetime.utcfromtimestamp(t_ms / 1000.0)
-return {
-'symbol': symbol,
-'timespan': timespan,
-'period_multiplier': multiplier,
-backfill(symbols, days=30, multiplier=1, timespan='1day')
+    t_ms = int(bar.get('t'))
+    t = datetime.utcfromtimestamp(t_ms / 1000.0)
+    return {
+    'symbol': symbol,
+    'timespan': timespan,
+    'period_multiplier': multiplier,
+    backfill(symbols, days=30, multiplier=1, timespan='1day')
