@@ -1,1 +1,5 @@
+# Ignore every file in this folder
+*
 .env
+# Except this one
+!.gitignore
