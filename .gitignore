@@ -3,3 +3,4 @@
 .env
 # Except this one
 !.gitignore
+!.empty
