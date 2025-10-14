@@ -25,5 +25,6 @@ def aggs_to_df(symbol, aggs, tz="America/New_York"):
     df["event_time_utc"] = pd.to_datetime(df["timestamp"], unit="ms", utc=True)
     df["event_time_local"] = df["event_time_utc"].dt.tz_convert(tz)
     df["dt"] = df["event_time_utc"].dt.strftime("%Y-%m-%d")
+    df["dt_local"] = df["event_time_local"].dt.strftime("%Y-%m-%d")
 
     return df

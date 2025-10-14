@@ -8,16 +8,18 @@ terraform {
 }
 
 provider "aws" {
-  # MinIO credentials (match what you use in docker run)
-  access_key                  = "minioadmin"
-  secret_key                  = "minioadmin"
-  region                      = "us-east-1"
+  access_key                   = "minioadmin"
+  secret_key                   = "minioadmin"
+  region                       = "us-east-1"
 
-  # Tell Terraform this is *not* AWS but an S3-compatible endpoint
-  skip_credentials_validation = true
-  skip_metadata_api_check     = true
-  skip_requesting_account_id  = true
-  s3_force_path_style         = true
+  # MinIO isn’t real AWS, so skip these checks
+  skip_credentials_validation  = true
+  skip_metadata_api_check      = true
+  skip_requesting_account_id   = true
+  skip_region_validation       = true
+
+  # 👉 Force path-style addressing (http://localhost:9000/bucket)
+  s3_use_path_style            = true
 
   endpoints {
     s3 = "http://localhost:9000"

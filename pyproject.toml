@@ -1,0 +1,31 @@
+[project]
+name = "equity-data-pipeline"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "boto3 (>=1.40.43,<2.0.0)",
+    "requests (>=2.32.5,<3.0.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "pandas (>=2.3.3,<3.0.0)",
+    "pyarrow (>=21.0.0,<22.0.0)",
+    "polygon-api-client (>=1.15.4,<2.0.0)",
+    "pydantic (>=2.11.10,<3.0.0)",
+    "plotly (>=6.3.1,<7.0.0)",
+    "dotenv (>=0.9.9,<0.10.0)",
+    "s3fs (>=2025.9.0,<2026.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+"plotly.express" = [
+    "pytest (>=8.4.2,<9.0.0)"
+]

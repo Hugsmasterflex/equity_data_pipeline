@@ -1,6 +1,7 @@
 # ingestion/writer.py
 import pandas as pd
 import logging
+from config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -11,9 +12,9 @@ def write_partitioned(df, bucket, base_path):
 
     import s3fs
     fs = s3fs.S3FileSystem(
-        key=df.attrs.get("aws_access_key_id", "minioadmin"),
-        secret=df.attrs.get("aws_secret_access_key", "minioadmin"),
-        client_kwargs={"endpoint_url": "http://localhost:9000"}
+        key=settings.AWS_ACCESS_KEY_ID,
+        secret=settings.AWS_SECRET_ACCESS_KEY,
+        client_kwargs={"endpoint_url": settings.MINIO_ENDPOINT}
     )
 
     for dt, group in df.groupby("dt"):
